@@ -1,0 +1,40 @@
+[connection]
+id={{ connection.id }}
+uuid={{ connection.uuid }}
+type=wifi
+permissions=user:{{ connection.local_user }}:;
+secondaries=
+timestamp=
+
+[wifi]
+mac-address={{ connection.mac_address }}
+mac-address-blacklist=
+mac-address-randomization=1
+mode=infrastructure
+seen-bssids=
+ssid={{ connection.ssid }}
+
+[wifi-security]
+group=
+key-mgmt=wpa-eap
+pairwise=
+proto=
+
+[802-1x]
+altsubject-matches=
+ca-cert={{ connection.ca_cert }}
+eap=ttls;
+identity={{ connection.identity }}
+password={{ connection.password }}
+phase2-altsubject-matches=
+phase2-auth={{ connection.phase2_auth }}
+
+[ipv4]
+dns-search=
+method=auto
+
+[ipv6]
+addr-gen-mode=stable-privacy
+dns-search=
+ip6-privacy=0
+method=ignore

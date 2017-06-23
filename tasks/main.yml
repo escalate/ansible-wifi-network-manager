@@ -1,0 +1,55 @@
+---
+
+- name: Install network-manager packages
+  apt:
+    name: "{{item}}"
+    state: present
+  with_items:
+    - network-manager
+    - network-manager-gnome
+  when: ansible_os_family == 'Debian'
+  tags:
+    - wifi
+
+- name: Create network-manager directories
+  file:
+    path: "{{item}}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+  with_items:
+    - /etc/NetworkManager
+    - /etc/NetworkManager/system-connections
+  tags:
+    - wifi
+
+- name: Create Wi-Fi connections with WPA-PSK
+  template:
+    src: wpa_psk.j2
+    dest: "/etc/NetworkManager/system-connections/{{item.id}}"
+    owner: root
+    group: root
+    mode: 0600
+  vars:
+    connection: "{{item}}"
+  with_items: "{{wifi_wpa_psk_connections}}"
+  notify:
+    - Restart network-manager
+  tags:
+    - wifi
+
+- name: Create Wi-Fi connections with WPA-EAP TTLS
+  template:
+    src: wpa_eap_ttls.j2
+    dest: "/etc/NetworkManager/system-connections/{{item.id}}"
+    owner: root
+    group: root
+    mode: 0600
+  vars:
+    connection: "{{item}}"
+  with_items: "{{wifi_wpa_eap_ttls_connections}}"
+  notify:
+    - Restart network-manager
+  tags:
+    - wifi

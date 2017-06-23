@@ -1,0 +1,32 @@
+[connection]
+id={{ connection.id }}
+uuid={{ connection.uuid }}
+type=wifi
+permissions=user:{{ connection.local_user }}:;
+secondaries=
+timestamp=
+
+[wifi]
+mac-address={{ connection.mac_address }}
+mac-address-blacklist=
+mac-address-randomization=0
+mode=infrastructure
+seen-bssids=
+ssid={{ connection.ssid }}
+
+[wifi-security]
+group=
+key-mgmt=wpa-psk
+pairwise=
+proto=
+psk={{ connection.psk }}
+
+[ipv4]
+dns-search=
+method=auto
+
+[ipv6]
+addr-gen-mode=stable-privacy
+dns-search=
+ip6-privacy=0
+method=ignore
